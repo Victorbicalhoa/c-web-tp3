@@ -1,0 +1,31 @@
+﻿@page
+@model CityBreaks.Web.Pages.IndexModel
+
+<h1>Lista de Cidades</h1>
+
+<a class="btn btn-success mb-3" asp-page="/CreateProperty">Cadastrar Nova Propriedade</a>
+
+<a asp-page="/FilterProperty">🔍 Filtrar Propriedades</a>
+
+@foreach (var city in Model.Cities)
+{
+    <div style="margin-bottom: 20px;">
+        <h3>
+            <a asp-page="/CityDetails" asp-route-name="@city.Name">
+                @city.Name - @city.Country.CountryName
+            </a>
+        </h3>
+        <ul>
+            @foreach (var property in city.Properties)
+            {
+                <li>@property.Name - @property.PricePerNight.ToString("C")</li>
+                <a class="btn btn-sm btn-warning" asp-page="/EditProperty" asp-route-id="@property.Id">Editar</a>
+                <form method="post" asp-page-handler="Delete" asp-route-id="@property.Id" class="d-inline">
+                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
+                </form>
+
+            }
+        </ul>
+    </div>
+   
+}
